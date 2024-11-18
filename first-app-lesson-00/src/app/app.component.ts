@@ -19,7 +19,6 @@ import { RouterModule, RouterOutlet } from '@angular/router';
      </a>
     <section class="content">
     <router-outlet></router-outlet>
-      <app-home (inputEvt)="getInput($event)"></app-home>
     </section>
   </main>`,
   styleUrls: ['./app.component.css'],

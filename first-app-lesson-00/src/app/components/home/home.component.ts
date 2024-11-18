@@ -11,26 +11,27 @@ import { HousingService } from '../../services/housing.service';
   template: `
     <section>
       <form>
-        <input type="text" placeholder="Filter by city" #inputItem />
+        <input type="text" placeholder="Filter by city" #inputItem (input)="inputEvt($event)"/>
         <button
           class="primary"
           type="button"
-          (click)="sendInput(inputItem.value)"
+          (click)="searchHouse(inputItem.value)"
         >
           Search
         </button>
       </form>
       <section class="results">
+        <div *ngIf="housingLocationList.length > 0">
         <app-housing-location *ngFor="let housingLocation of housingLocationList"
           [housingLocation]="housingLocation"
-        ></app-housing-location>
+        ></app-housing-location></div>
+        <p *ngIf="!housingLocationList.length">No search results found!</p>
       </section>
     </section>
   `,
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  @Output() inputEvt = new EventEmitter<string>();
   readonly baseUrl = 'https://angular.io/assets/images/tutorials/faa';
   housingLocationList!: HousingLocation[];
 
@@ -38,7 +39,17 @@ export class HomeComponent {
   this.housingLocationList = this.housingService.getAllHousingLocations();
   }
 
-  sendInput(val: string) {
-    !!val ? this.inputEvt.emit(val) : alert('Please enter a value!');
+  searchHouse(val: string) {
+    if(!val || val === ""){
+      this.housingLocationList = this.housingService.getAllHousingLocations();
+    }else{
+      this.housingLocationList = this.housingService.searchHouse(val);
+    }
+  }
+
+  inputEvt($event:any){
+    $event.preventDefault();
+    if(!$event.target.value){
+      this.housingLocationList = this.housingService.getAllHousingLocations();    }
   }
 }
