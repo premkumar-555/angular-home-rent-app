@@ -15,11 +15,15 @@ import { HomeComponent } from './components/home/home.component';
       />
     </header>
     <section class="content">
-      <app-home></app-home>
+      <app-home (inputEvt)="getInput($event)"></app-home>
     </section>
   </main>`,
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'homes';
+
+  getInput($event:string){
+    console.log('Received input value : ', $event);
+  }
 }
