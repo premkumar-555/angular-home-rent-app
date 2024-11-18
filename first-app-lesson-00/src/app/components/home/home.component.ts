@@ -21,10 +21,9 @@ import { HousingService } from '../../services/housing.service';
         </button>
       </form>
       <section class="results">
-        <div *ngIf="housingLocationList.length > 0">
         <app-housing-location *ngFor="let housingLocation of housingLocationList"
           [housingLocation]="housingLocation"
-        ></app-housing-location></div>
+        ></app-housing-location>
         <p *ngIf="!housingLocationList.length">No search results found!</p>
       </section>
     </section>
